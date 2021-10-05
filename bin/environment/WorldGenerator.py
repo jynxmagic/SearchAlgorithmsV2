@@ -9,7 +9,9 @@ class WorldGenerator:
         world = World()
         grid = world.get_grid()
 
-        self.images = ImageLoader().getAllImages()
+        self.images = ImageLoader().getAllEnvImages()
+
+        print(self.images)
 
         for piece in grid:
             piece = grid[piece]
