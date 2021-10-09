@@ -1,40 +1,59 @@
-from tkinter import *
-from images.ImageLoader import ImageLoader
+from copy import deepcopy
+from tkinter import Canvas, Label, Tk, mainloop
+
 from environment.WorldGenerator import WorldGenerator
+from images.ImageLoader import ImageLoader
+from search_algorithms.tree.TDepthFirstSearch import TDepthFirstSearch
+from things.Objective import Objective
 from things.Robot import Robot
 
-def draw_world(world):
-    #background tiles
+
+def add_label(v):
+    label = Label(image=v.image)
+    label.photo = v.image
+    label.place(x=v.position[0], y=v.position[1])
+
+
+def draw_world(world, robot, objective):
+    # background tiles
     for tile in world.tiles:
         key = tile
         tile = world.tiles[key]
+        print(tile)
+        add_label(tile)
+    add_label(robot)
+    add_label(objective)
 
-        label = Label(image=tile.image)
-        label.photo = tile.image
-        label.place(x=tile.position[0],y=tile.position[1])
 
-    #robot
+def main():
+    root = Tk()
+    root.configure(background="#427439")
+    worldgen = WorldGenerator()
+    world = worldgen.create_world()
+
+    canvas_height = 1080
+    canvas_width = 1920
+
+    w = Canvas(root, width=canvas_width, height=canvas_height)
+    w.pack()
+
     robot = Robot()
-    robotLabel = Label(image=robot.image)
-    robotLabel.photo = robot.image
-    robotLabel.place(x=robot.position[0],y=robot.position[1])
+    objective = Objective()
+    draw_world(world, robot, objective)
+    mainloop()
 
-root = Tk()
-root.configure(background="#427439")
-worldgen = WorldGenerator()
-world = worldgen.create_world()
+    initial_state = world.np_tiles.copy()
+    initial_state[robot.location[0], robot.location[1]] = 2
+    initial_state[objective.location[0], objective.location[1]] = 3
 
+    objective_state = world.np_tiles.copy()
+    objective_state[robot.location[0], robot.location[1]] = 1
+    objective_state[objective.location[0], objective.location[1]] = 2
 
-canvas_height=1080
-canvas_width=1920
-
-w = Canvas(root, 
-           width=canvas_width,
-           height=canvas_height)
-w.pack()
-
-draw_world(world)
+    dfs = TDepthFirstSearch(initial_state, objective_state, objective.location)
+    print(dfs.solve())
 
 
 
-mainloop()
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,9 @@
-from environment.world.World import World
 from random import random
+
 from images.ImageLoader import ImageLoader
+
+from environment.world.World import World
+
 
 class WorldGenerator:
     images = []
@@ -9,25 +12,24 @@ class WorldGenerator:
         world = World()
         grid = world.get_grid()
 
-        self.images = ImageLoader().getAllEnvImages()
+        self.images = ImageLoader().get_all_env_images()
 
         print(self.images)
 
         for piece in grid:
             piece = grid[piece]
-            t=random()
-            if(t<0.8):
-                walkable=True
+            t = random()
+            if t < 0.8:
+                cost = 1
             else:
-                walkable=False
-            image = self.get_image(walkable)
-            world.create_tile(piece, walkable, image)
+                cost = 0
+            image = self.get_image(cost)
+            world.create_tile(piece, cost, image)
 
         return world
 
     def get_image(self, walkable):
-        if walkable:
+        if walkable == 1:
             return self.images[0]
         else:
             return self.images[1]
-        return self.images[0]
