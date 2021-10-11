@@ -1,12 +1,13 @@
+from Config import Config
 from environment.grid.Piece import Piece
 
 
 class Grid:
     pieces = dict()
-    pieceSize = 64
+    pieceSize = Config.TILE_SIZE
 
-    gridWidth = 1920
-    gridHeight = 1080
+    gridWidth = Config.WIDTH
+    gridHeight = Config.HEIGHT
 
     def generate_grid(self):
         x = y = 0
