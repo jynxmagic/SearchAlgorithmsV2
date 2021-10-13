@@ -15,7 +15,7 @@ def generate_init_state():
         "graph": graph,
         "robot_location": [x_robot, y_robot],
         "objective_location": [x_target, y_target],
-        "path":[]
+        "path":[[x_robot.copy(), y_robot.copy()]]
     }
 
 
