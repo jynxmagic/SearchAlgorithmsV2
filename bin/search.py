@@ -11,7 +11,7 @@ def tree_breadth_first_solve(initial_state, target_state):
     while not fifo_queue.empty():
         current_state = fifo_queue.get()
 
-        print(current_state)
+        print(current_state["robot_location"])
 
         if is_goal(current_state, target_state):
             return current_state
