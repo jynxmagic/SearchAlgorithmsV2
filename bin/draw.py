@@ -19,6 +19,7 @@ def draw_state(state):
         j += 1
 
     root.lift()
+    root.attributes("-topmost", True)
     root.mainloop()
 
 
@@ -45,4 +46,5 @@ def draw_route(state, color="yellow"):
         ).grid(row=action[0], column=action[1])
 
     root.lift()
+    root.attributes("-topmost", True)
     root.mainloop()
