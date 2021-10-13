@@ -13,3 +13,11 @@ def is_goal(current_state, target_state):
     ):
         return True
     return False
+
+
+def is_in_closed_set(location, closed_set):
+    x, y = location
+    for to_test in closed_set:
+        if to_test[0] == x and to_test[1] == y:
+            return True
+    return False

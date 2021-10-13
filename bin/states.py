@@ -4,9 +4,9 @@ import numpy as np
 
 
 def generate_init_state():
-    graph = np.random.randint(low=0, high=20, size=(10, 10))
+    graph = np.random.randint(low=0, high=20, size=(7, 7))
 
-    x_robot, y_robot, x_target, y_target = np.random.randint(low=0, high=10, size=4)
+    x_robot, y_robot, x_target, y_target = np.random.randint(low=0, high=6, size=4)
 
     graph[x_robot, y_robot] = -1  # robot location represented as -1
     graph[x_target, y_target] = -2  # objective location represented as -2
@@ -15,7 +15,7 @@ def generate_init_state():
         "graph": graph,
         "robot_location": [x_robot, y_robot],
         "objective_location": [x_target, y_target],
-        "path":[[x_robot.copy(), y_robot.copy()]]
+        "path": [[x_robot.copy(), y_robot.copy()]],
     }
 
 
@@ -37,15 +37,16 @@ def get_children_states(state, initial_state):
     states = []
 
     robot_original_location = state["robot_location"]
-    old_movement_cost = initial_state["graph"][robot_original_location[0],robot_original_location[1]]
-
+    old_movement_cost = initial_state["graph"][
+        robot_original_location[0], robot_original_location[1]
+    ]
 
     for i in range(4):
         new_state = deepcopy(state)
         try:
             new_state["graph"][
                 robot_original_location[0], robot_original_location[1]
-            ] = old_movement_cost # revert old location to orig. value
+            ] = old_movement_cost  # revert old location to orig. value
         except IndexError:
             continue
 
@@ -58,6 +59,11 @@ def get_children_states(state, initial_state):
             y += 1
         elif i == 3:
             x -= 1
+
+        if x < 0 or y < 0:
+            continue
+        if x > 7 or y > 7:
+            continue
         try:
             new_state["graph"][x, y] = -1
             new_state["robot_location"][0] = x
