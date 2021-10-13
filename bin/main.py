@@ -23,6 +23,8 @@ def main():
     draw_route(results["tdfs"], color="green")
     draw_route(results["gbfs"], color="yellow")
     draw_route(results["gdfs"], color="green")
+    draw_route(results["tucs"], color="purple")
+    draw_route(results["gucs"], color="purple")
 
 
 if __name__ == "__main__":

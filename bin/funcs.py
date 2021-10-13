@@ -21,3 +21,7 @@ def is_in_closed_set(location, closed_set):
         if to_test[0] == x and to_test[1] == y:
             return True
     return False
+
+
+def uniform_sort(arr):
+    return sorted(arr, key=lambda x: x[0])

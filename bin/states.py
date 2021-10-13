@@ -60,6 +60,7 @@ def get_children_states(state, initial_state):
         elif i == 3:
             x -= 1
 
+        # bounds
         if x < 0 or y < 0:
             continue
         if x > 7 or y > 7:
