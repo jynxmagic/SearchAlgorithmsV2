@@ -11,11 +11,13 @@ class TDepthFirstSearch(Search):
 
         i = 0
         while not self.queue.empty():
-            if(i > 1000):
-                #the tree runs forever in depth first
-                print("Failed to find result with Tree Depth First Search (likely infinite loop).")
+            if i > 1000:
+                # the tree runs forever in depth first
+                print(
+                    "Failed to find result with Tree Depth First Search (likely infinite loop)."
+                )
                 return None
-            i+=1
+            i += 1
             n = self.queue.get()
             print(n.robot_location)
             if self.is_goal(n):
@@ -23,4 +25,3 @@ class TDepthFirstSearch(Search):
             for node in n.children_nodes():
                 self.queue.put(node)
         return None
-

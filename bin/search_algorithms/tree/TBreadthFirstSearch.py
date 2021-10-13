@@ -16,4 +16,3 @@ class TBreadthFirstSearch(Search):
             for node in n.children_nodes():
                 self.queue.put(node)
         return None
-

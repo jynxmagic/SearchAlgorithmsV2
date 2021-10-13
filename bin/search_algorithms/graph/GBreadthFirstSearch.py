@@ -9,7 +9,7 @@ class GBreadthFirstSearch(Search):
         self.queue = queue.Queue()
         self.queue.put(Node(self.init_state))
         closed_set = []
-        
+
         while not self.queue.empty():
             n = self.queue.get()
             if n not in closed_set:
@@ -20,4 +20,3 @@ class GBreadthFirstSearch(Search):
                 for node in n.children_nodes():
                     self.queue.put(node)
         return None
-

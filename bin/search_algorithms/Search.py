@@ -3,12 +3,11 @@ import queue
 from search_algorithms.Node import Node
 
 
-class Search:    
+class Search:
     def __init__(self, init_state, goal_state, goal_location):
         self.init_state = init_state
         self.goal_state = goal_state
         self.goal_location = goal_location
-        
 
     def is_goal(self, to_c):
         robot_curr_location = to_c.robot_location
