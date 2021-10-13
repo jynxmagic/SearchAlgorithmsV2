@@ -4,6 +4,8 @@ from tkinter import Canvas, Label, Tk, mainloop
 from Config import Config
 from environment.WorldGenerator import WorldGenerator
 from images.ImageLoader import ImageLoader
+from search_algorithms.graph.GBreadthFirstSearch import GBreadthFirstSearch
+from search_algorithms.graph.GDepthFirstSearch import GDepthFirstSearch
 from search_algorithms.tree.TBreadthFirstSearch import TBreadthFirstSearch
 from search_algorithms.tree.TDepthFirstSearch import TDepthFirstSearch
 from things.Objective import Objective
@@ -31,7 +33,7 @@ def print_path(node):
     for node in node.path():
         print(i, node.robot_location)
         i+=1
-        
+
 def main():
     root = Tk()
     root.configure(background="#427439")
@@ -57,14 +59,24 @@ def main():
     objective_state[robot.location[0], robot.location[1]] = 1
     objective_state[objective.location[0], objective.location[1]] = 2
 
-    breadth_first_search = TBreadthFirstSearch(initial_state, objective_state, objective.location)
-    tbfs_result = breadth_first_search.solve()
+    tbreadth_first_search = TBreadthFirstSearch(initial_state, objective_state, objective.location)
+    tbfs_result = tbreadth_first_search.solve()
 
-    depth_first_search = TDepthFirstSearch(initial_state, objective_state, objective.location)
-    tdfs_result = depth_first_search.solve()
+    tdepth_first_search = TDepthFirstSearch(initial_state, objective_state, objective.location)
+    tdfs_result = tdepth_first_search.solve()
 
-    print("-----------")
+
+    gbreadthfirstsearch = GBreadthFirstSearch(initial_state, objective_state, objective.location)
+    gbfs_res = gbreadthfirstsearch.solve()
+
+    gdepthfirstsearch = GDepthFirstSearch(initial_state, objective_state, objective.location)
+    gdfs_res = gdepthfirstsearch.solve()
+
+
+    sep="-------------"
+    print(sep)
     print("Results:")
+    print(sep)
     print("Tree Depth First Search")
     if tdfs_result is not None:
         print_path(tdfs_result)
@@ -72,6 +84,13 @@ def main():
         print("No result for Tree depth first search. (Searching in a circle)")
     print("Tree Breadth First Search")
     print_path(tbfs_result)
+
+
+    print(sep)
+    print("Graph breadth first search")
+    print_path(gbfs_res)
+    print("Graph depth first search")
+    print_path(gdfs_res)
 
 
 if __name__ == "__main__":
