@@ -21,6 +21,7 @@ def start_search_threads(initial_state, target_state):
 
     # ray.get forces main thread to stop until results.
     # all child threads are still running simultaenously though
+    print("Waiting for searches to find solutions...")
     return {
         "tbfs": ray.get(tbfs_ref),
         "tdfs": ray.get(tdfs_ref),

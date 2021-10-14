@@ -23,9 +23,8 @@ def draw_state(state):
     root.mainloop()
 
 
-def draw_route(state, color="yellow"):
-    root = tk.Tk()
-
+def draw_route(state, color="yellow", title="Search"):
+    root = tk.Tk()    
     i = 0
     j = 0
     for x in state["graph"]:

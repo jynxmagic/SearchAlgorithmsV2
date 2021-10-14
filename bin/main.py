@@ -9,7 +9,7 @@ from search import start_search_threads
 from states import generate_init_state, generate_target_state
 
 print("Starting Ray.. (takes a couple of seconds.)")
-ray.init()
+ray.init(address="auto")
 
 
 def main():
