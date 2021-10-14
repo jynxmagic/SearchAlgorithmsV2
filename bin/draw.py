@@ -34,6 +34,8 @@ def draw_route(state, color="yellow"):
             if y == -1:
                 tk.Label(root, text=y, borderwidth=32, bg="blue").grid(row=j, column=i)
             elif y == -2:
+                tk.Label(root, text=y, borderwidth=32, bg="green").grid(row=j, column=i)
+            elif y == -3:
                 tk.Label(root, text=y, borderwidth=32, bg="red").grid(row=j, column=i)
             else:
                 tk.Label(root, text=y, borderwidth=32).grid(row=j, column=i)
