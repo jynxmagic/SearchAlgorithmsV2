@@ -11,6 +11,8 @@ def draw_state(state):
             if y == -1:
                 tk.Label(root, text=y, borderwidth=32, bg="blue").grid(row=j, column=i)
             elif y == -2:
+                tk.Label(root, text=y, borderwidth=32, bg="green").grid(row=j, column=i)
+            elif y == -3:
                 tk.Label(root, text=y, borderwidth=32, bg="red").grid(row=j, column=i)
             else:
                 tk.Label(root, text=y, borderwidth=32).grid(row=j, column=i)
@@ -23,8 +25,8 @@ def draw_state(state):
     root.mainloop()
 
 
-def draw_route(state, color="yellow", title="Search"):
-    root = tk.Tk()    
+def draw_route(state, color="yellow"):
+    root = tk.Tk()
     i = 0
     j = 0
     for x in state["graph"]:

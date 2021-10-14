@@ -8,10 +8,12 @@ def generate_init_state():
 
     x_robot, y_robot, x_target, y_target = np.random.randint(low=0, high=8, size=4)
 
-    immoveable_cells = np.random.randint(low=0, high=9, size=(10,2)) #10 immoveable cells
+    immoveable_cells = np.random.randint(
+        low=0, high=9, size=(10, 2)
+    )  # 10 immoveable cells
 
     for cell in immoveable_cells:
-        graph[cell[0],cell[1]] = -3 # -3 represents immoveable cell
+        graph[cell[0], cell[1]] = -3  # -3 represents immoveable cell
     graph[x_robot, y_robot] = -1  # robot location represented as -1
     graph[x_target, y_target] = -2  # objective location represented as -2
 
@@ -66,8 +68,8 @@ def get_children_states(state, initial_state):
         if x > 9 or y > 9:
             continue
         try:
-            v=initial_state["graph"][x,y]
-            if(v<0 and v != -2): # cannot move to special cells
+            v = initial_state["graph"][x, y]
+            if v < 0 and v != -2:  # cannot move to special cells
                 continue
             new_state["graph"][x, y] = -1
             new_state["robot_location"][0] = x
