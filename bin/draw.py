@@ -3,6 +3,7 @@ import tkinter as tk
 
 def draw_state(state):
     root = tk.Tk()
+    root.title("Problem")
 
     i = 0
     j = 0
@@ -25,8 +26,9 @@ def draw_state(state):
     root.mainloop()
 
 
-def draw_route(state, color="yellow"):
+def draw_route(state, color="yellow", title=None):
     root = tk.Tk()
+    root.title(title)
     i = 0
     j = 0
     for x in state["graph"]:

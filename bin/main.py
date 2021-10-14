@@ -19,13 +19,14 @@ def main():
 
     results = start_search_threads(initial_state, target_state)
 
-    draw_route(results["tbfs"], color="yellow")
-    draw_route(results["tdfs"], color="green")
-    draw_route(results["gbfs"], color="yellow")
-    draw_route(results["gdfs"], color="green")
-    draw_route(results["tucs"], color="purple")
-    draw_route(results["gucs"], color="purple")
-
+    draw_route(results["tbfs"], color="yellow", title="Tree Breadth First Search")
+    draw_route(results["gbfs"], color="yellow", title="Graph Breadth First Search")
+    draw_route(results["tdfs"], color="green", title="Tree Depth First Search")
+    draw_route(results["gdfs"], color="green", title="Graph Depth First Search")
+    draw_route(results["tucs"], color="purple", title="Tree Uniform Cost Search")
+    draw_route(results["gucs"], color="purple", title="Graph Uniform Cost Search")
+    draw_route(results["tastar"], color="orange", title="Tree A* Search")
+    draw_route(results["gastar"], color="orange", title="Graph A* Search")
 
 if __name__ == "__main__":
     main()

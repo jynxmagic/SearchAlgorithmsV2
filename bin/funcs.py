@@ -25,3 +25,9 @@ def is_in_closed_set(location, closed_set):
 
 def uniform_sort(arr):
     return sorted(arr, key=lambda x: x[0])
+
+
+def manhattan_distance(l0, l1):
+    diff_x = abs(l0[0]-l1[0])
+    diff_y = abs(l0[1]-l1[1])
+    return diff_x + diff_y
