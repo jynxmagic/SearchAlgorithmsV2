@@ -9,11 +9,11 @@ def draw_state(state):
     j = 0
     for x in state["graph"]:
         for y in x:
-            if y == -1:
+            if y == -1: # robot
                 tk.Label(root, text=y, borderwidth=32, bg="blue").grid(row=j, column=i)
-            elif y == -2:
+            elif y == -2: # target
                 tk.Label(root, text=y, borderwidth=32, bg="green").grid(row=j, column=i)
-            elif y == -3:
+            elif y == -3: # immoveable cells
                 tk.Label(root, text=y, borderwidth=32, bg="red").grid(row=j, column=i)
             else:
                 tk.Label(root, text=y, borderwidth=32).grid(row=j, column=i)

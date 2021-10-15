@@ -4,7 +4,7 @@ import numpy as np
 
 
 def generate_init_state():
-    graph = np.random.randint(low=0, high=20, size=(9, 9))
+    graph = np.random.randint(low=1, high=10, size=(9, 9))
 
     x_robot, y_robot, x_target, y_target = np.random.randint(low=0, high=8, size=4)
 
@@ -68,8 +68,8 @@ def get_children_states(state, initial_state):
         if x > 9 or y > 9:
             continue
         try:
-            v = initial_state["graph"][x, y]
-            if v < 0 and v != -2:  # cannot move to special cells
+            cost = initial_state["graph"][x, y]
+            if cost < 0 and cost != -2:  # cannot move to special cells, identified by minus scalar
                 continue
             new_state["graph"][x, y] = -1
             new_state["robot_location"][0] = x
