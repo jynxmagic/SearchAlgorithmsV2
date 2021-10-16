@@ -1,4 +1,5 @@
 from queue import LifoQueue, PriorityQueue, Queue
+from time import time
 
 import ray
 from ray import remote
@@ -32,7 +33,7 @@ def start_search_threads(initial_state, target_state):
         "tucs": ray.get(tucs_ref),
         "gucs": ray.get(gucs_ref),
         "tastar": ray.get(tastar_ref),
-        "gastar": ray.get(gastar_ref)
+        "gastar": ray.get(gastar_ref),
     }
 
 
@@ -41,11 +42,15 @@ def tree_breadth_first_solve(initial_state, target_state):
     fifo_queue = Queue()
     fifo_queue.put(initial_state)
 
+    start_time = time()
+    i = 0
     while not fifo_queue.empty():
+        i += 1
         current_state = fifo_queue.get()
         if is_goal(current_state, target_state):
             print("Tree bfs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_states in get_children_states(current_state, initial_state):
             fifo_queue.put(child_states)
@@ -56,13 +61,15 @@ def tree_depth_first_solve(initial_state, target_state):
     lifo_queue = LifoQueue()
     lifo_queue.put(initial_state)
 
+    start_time = time()
     i = 0
     while not lifo_queue.empty():
         i += 1
         current_state = lifo_queue.get()
         if is_goal(current_state, target_state) or i == 100:
             print("Tree dfs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_states in get_children_states(current_state, initial_state):
             lifo_queue.put(child_states)
@@ -74,12 +81,17 @@ def graph_breadth_first_solve(initial_state, target_state):
     fifo_queue.put(initial_state)
 
     closed_set = []
+
+    start_time = time()
+    i = 0
     while not fifo_queue.empty():
+        i += 1
         current_state = fifo_queue.get()
         closed_set.append(current_state["robot_location"])
         if is_goal(current_state, target_state):
             print("Graph bfs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(child_state["robot_location"], closed_set):
@@ -92,12 +104,17 @@ def graph_depth_first_solve(initial_state, target_state):
     lifo_queue.put(initial_state)
 
     closed_set = []
+
+    start_time = time()
+    i = 0
     while not lifo_queue.empty():
+        i += 1
         current_state = lifo_queue.get()
         closed_set.append(current_state["robot_location"])
         if is_goal(current_state, target_state):
             print("Graph dfs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(child_state["robot_location"], closed_set):
@@ -117,13 +134,15 @@ def tree_uniform_cost_solve(initial_state, target_state):
     prio_queue = []
     prio_queue.append((0, initial_state))
 
+    start_time = time()
     i = 0
     while not prio_queue.__sizeof__() == 0:
         i += 1
         prio, current_state = prio_queue.pop(0)
         if is_goal(current_state, target_state) or i == 100:
             print("Tree ucs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
             uniform_cost = (
@@ -145,13 +164,17 @@ def graph_uniform_cost_solve(initial_state, target_state):
 
     closed_set = []
 
+    start_time = time()
+    i = 0
     while not prio_queue.__sizeof__ == 0:
+        i += 1
         prio, current_state = prio_queue.pop(0)
         closed_set.append(current_state["robot_location"])
 
         if is_goal(current_state, target_state):
             print("Graph ucs solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
 
@@ -172,12 +195,16 @@ def tree_astar_solve(initial_state, target_state):
     prio_queue = []
     prio_queue.append((0, initial_state))
 
+    start_time = time()
+    i = 0
     while not prio_queue.__sizeof__ == 0:
+        i += 1
         prio, current_state = prio_queue.pop(0)
 
         if is_goal(current_state, target_state):
             print("Tree A* solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
             uniform_cost = (
@@ -204,13 +231,17 @@ def graph_astar_solve(initial_state, target_state):
 
     closed_set = []
 
+    start_time = time()
+    i = 0
     while not prio_queue.__sizeof__ == 0:
+        i += 1
         prio, current_state = prio_queue.pop(0)
         closed_set.append(current_state["robot_location"])
 
         if is_goal(current_state, target_state):
             print("Graph A* solved!")
-            return current_state
+            elapsed = time() - start_time
+            return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(child_state["robot_location"], closed_set):

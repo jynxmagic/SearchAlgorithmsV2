@@ -28,6 +28,6 @@ def uniform_sort(arr):
 
 
 def manhattan_distance(l0, l1):
-    diff_x = abs(l0[0]-l1[0])
-    diff_y = abs(l0[1]-l1[1])
+    diff_x = abs(l0[0] - l1[0])
+    diff_y = abs(l0[1] - l1[1])
     return diff_x + diff_y

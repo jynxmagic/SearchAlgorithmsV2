@@ -69,7 +69,9 @@ def get_children_states(state, initial_state):
             continue
         try:
             cost = initial_state["graph"][x, y]
-            if cost < 0 and cost != -2:  # cannot move to special cells, identified by minus scalar
+            if (
+                cost < 0 and cost != -2
+            ):  # cannot move to special cells, identified by minus scalar
                 continue
             new_state["graph"][x, y] = -1
             new_state["robot_location"][0] = x
