@@ -48,8 +48,8 @@ def tree_breadth_first_solve(initial_state, target_state):
         i += 1
         current_state = fifo_queue.get()
         if is_goal(current_state, target_state):
-            print("Tree bfs solved!")
             elapsed = time() - start_time
+            print("Tree bfs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_states in get_children_states(current_state, initial_state):
@@ -67,8 +67,8 @@ def tree_depth_first_solve(initial_state, target_state):
         i += 1
         current_state = lifo_queue.get()
         if is_goal(current_state, target_state) or i == 100:
-            print("Tree dfs solved!")
             elapsed = time() - start_time
+            print("Tree dfs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_states in get_children_states(current_state, initial_state):
@@ -89,8 +89,8 @@ def graph_breadth_first_solve(initial_state, target_state):
         current_state = fifo_queue.get()
         closed_set.append(current_state["robot_location"])
         if is_goal(current_state, target_state):
-            print("Graph bfs solved!")
             elapsed = time() - start_time
+            print("Graph bfs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
@@ -112,8 +112,8 @@ def graph_depth_first_solve(initial_state, target_state):
         current_state = lifo_queue.get()
         closed_set.append(current_state["robot_location"])
         if is_goal(current_state, target_state):
-            print("Graph dfs solved!")
             elapsed = time() - start_time
+            print("Graph dfs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
@@ -124,7 +124,7 @@ def graph_depth_first_solve(initial_state, target_state):
 @remote
 def tree_uniform_cost_solve(initial_state, target_state):
     # uniform cost will go round on a cheap circle... repetetively... (until cost of going closer to objective is less than
-    # cost of running in a circle) in a TREE only - limit implemented. more detail on this in report.
+    # cost of running in a circle) in a TREE only - limit implemented.
 
     # manual priority queue rather than queue.PriorityQueue()
     # due to NumPy and Python priority
@@ -140,8 +140,8 @@ def tree_uniform_cost_solve(initial_state, target_state):
         i += 1
         prio, current_state = prio_queue.pop(0)
         if is_goal(current_state, target_state) or i == 100:
-            print("Tree ucs solved!")
             elapsed = time() - start_time
+            print("Tree ucs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
@@ -172,8 +172,8 @@ def graph_uniform_cost_solve(initial_state, target_state):
         closed_set.append(current_state["robot_location"])
 
         if is_goal(current_state, target_state):
-            print("Graph ucs solved!")
             elapsed = time() - start_time
+            print("Graph ucs solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
@@ -202,8 +202,8 @@ def tree_astar_solve(initial_state, target_state):
         prio, current_state = prio_queue.pop(0)
 
         if is_goal(current_state, target_state):
-            print("Tree A* solved!")
             elapsed = time() - start_time
+            print("Tree A* solved in {}ms".format(int(elapsed*1000)))
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
@@ -239,8 +239,9 @@ def graph_astar_solve(initial_state, target_state):
         closed_set.append(current_state["robot_location"])
 
         if is_goal(current_state, target_state):
-            print("Graph A* solved!")
             elapsed = time() - start_time
+            print("Graph A* solved in {}ms".format(int(elapsed*1000)))
+            
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
