@@ -1,4 +1,5 @@
 from copy import deepcopy
+from time import time
 
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -18,7 +19,10 @@ def main():
     target_state = generate_target_state(initial_state)
     draw_state(initial_state)
 
+    print("starting threads...")
+    start_time = time()
     results = start_search_threads(initial_state, target_state)
+    print("finished all threads in {}".format(time() - start_time))
 
     draw_route(results["tbfs"][0], color="yellow", title="Tree Breadth First Search")
     draw_route(results["gbfs"][0], color="yellow", title="Graph Breadth First Search")
