@@ -4,25 +4,6 @@ import numpy as np
 
 
 def generate_init_state():
-    """graph = np.random.randint(low=1, high=10, size=(9, 9))
-
-    x_robot, y_robot, x_target, y_target = np.random.randint(low=0, high=8, size=4)
-
-    immoveable_cells = np.random.randint(
-        low=0, high=9, size=(10, 2)
-    )  # 10 immoveable cells
-
-    for cell in immoveable_cells:
-        graph[cell[0], cell[1]] = -3  # -3 represents immoveable cell
-    graph[x_robot, y_robot] = -1  # robot location represented as -1
-    graph[x_target, y_target] = -2  # objective location represented as -2
-
-    return {
-        "graph": graph,
-        "encoded_state": [x_robot, y_robot, x_target, y_target],
-        "path": [[x_robot.copy(), y_robot.copy()]],
-    } INITIALLY WAS RANDOM, CHANGED FOR REPRODUCABLILITY"""
-
     weighted_graph = [
         [9, 1, 8, 6, 8, 9, -3, 7, 2],
         [1, 7, 2, 6, 7, 4, 8, 7, 8],
@@ -37,11 +18,11 @@ def generate_init_state():
 
     np_weighted_graph = np.array(weighted_graph, dtype=int)
 
-    x_robot, y_robot, x_target, y_target = np.array([2, 2, 6, 1], dtype=int)
+    x_robot, y_robot, x_target, y_target = [2, 2, 6, 1]
 
     return {
         "graph": np_weighted_graph,
-        "encoded_state": [x_robot, y_robot, x_target, y_target],
+        "encoded_state": np.array([x_robot, y_robot, x_target, y_target], dtype=int),
         "path": [[copy(x_robot), copy(y_robot)]],
     }
 

@@ -141,10 +141,10 @@ def graph_depth_first_solve(initial_state, target_state):
 
 @remote
 def tree_uniform_cost_solve(initial_state, target_state):
-    # uniform cost will go round on a cheap circle... repetetively... (until cost of going closer to objective is less than
-    # cost of running in a circle) in a TREE only - limit implemented.
+    # 1. uniform cost will go round on a cheap circle... repetetively... (until cost of going closer to objective is less than
+    # cost of running in a circle) in a TREE only. While not limited, this can still cause issues.
 
-    # manual priority queue rather than queue.PriorityQueue()
+    # 2. manual priority queue rather than queue.PriorityQueue()
     # due to NumPy and Python priority
     # queue not working togther.
     # see: https://stackoverflow.com/questions/42236820/adding-numpy-array-to-a-heap-queue
@@ -157,7 +157,7 @@ def tree_uniform_cost_solve(initial_state, target_state):
     while prio_queue.__sizeof__() != 0:
         i += 1
         prio, current_state = prio_queue.pop(0)
-        if is_goal(current_state, target_state) or i == 100:
+        if is_goal(current_state, target_state):
             elapsed = time() - start_time
             print(
                 "Tree ucs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
