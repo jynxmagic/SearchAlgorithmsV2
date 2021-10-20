@@ -11,6 +11,15 @@ from states import get_children_states
 
 
 def start_search_threads(initial_state, target_state):
+    """Start all threads to search for target state
+
+    Args:
+        initial_state ([dict]): Starting state of the problem
+        target_state ([dict]): Finished state of the problem
+
+    Returns:
+        dict: solved problems
+    """
     tbfs_ref = tree_breadth_first_solve.remote(initial_state, target_state)
     tdfs_ref = tree_depth_first_solve.remote(initial_state, target_state)
     gbfs_ref = graph_breadth_first_solve.remote(initial_state, target_state)
@@ -37,6 +46,7 @@ def start_search_threads(initial_state, target_state):
 
 @ray.remote
 def tree_breadth_first_solve(initial_state, target_state):
+    """Use BFS to search for target state"""
     fifo_queue = Queue()
     fifo_queue.put(initial_state)
 
@@ -60,6 +70,7 @@ def tree_breadth_first_solve(initial_state, target_state):
 
 @ray.remote
 def tree_depth_first_solve(initial_state, target_state):
+    """Use DFS to search for target state"""
     lifo_queue = LifoQueue()
     lifo_queue.put(initial_state)
 
@@ -81,6 +92,7 @@ def tree_depth_first_solve(initial_state, target_state):
 
 @ray.remote
 def graph_breadth_first_solve(initial_state, target_state):
+    """Use BFS to search for target state"""
     fifo_queue = Queue()
     fifo_queue.put(initial_state)
 
@@ -111,6 +123,7 @@ def graph_breadth_first_solve(initial_state, target_state):
 
 @ray.remote
 def graph_depth_first_solve(initial_state, target_state):
+    """Use DFS to search for target state"""
     lifo_queue = LifoQueue()
     lifo_queue.put(initial_state)
 
@@ -141,6 +154,7 @@ def graph_depth_first_solve(initial_state, target_state):
 
 @ray.remote
 def tree_uniform_cost_solve(initial_state, target_state):
+    """Use ucs to search for target state."""
     # 1. uniform cost will go round on a cheap circle... repetetively... (until cost of going closer to objective is less than
     # cost of running in a circle) in a TREE only. While not limited, this can still cause issues.
 
@@ -179,6 +193,7 @@ def tree_uniform_cost_solve(initial_state, target_state):
 
 @ray.remote
 def graph_uniform_cost_solve(initial_state, target_state):
+    """Use UCS to search for target state"""
     prio_queue = []
     prio_queue.append((0, initial_state))
 
@@ -219,6 +234,7 @@ def graph_uniform_cost_solve(initial_state, target_state):
 
 @ray.remote
 def tree_astar_solve(initial_state, target_state):
+    """Use A* to search for target state"""
     prio_queue = []
     prio_queue.append((0, initial_state))
 
@@ -253,6 +269,7 @@ def tree_astar_solve(initial_state, target_state):
 
 @ray.remote
 def graph_astar_solve(initial_state, target_state):
+    """Use A* to search for target state."""
     prio_queue = []
     prio_queue.append((0, initial_state))
 

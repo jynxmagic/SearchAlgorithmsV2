@@ -4,6 +4,11 @@ import numpy as np
 
 
 def generate_init_state():
+    """Generates an initial state which is a representation fo the problem.
+
+    Returns:
+        [dict]: representation of the problem
+    """
     weighted_graph = [
         [9, 1, 8, 6, 8, 9, -3, 7, 2],
         [1, 7, 2, 6, 7, 4, 8, 7, 8],
@@ -28,6 +33,14 @@ def generate_init_state():
 
 
 def generate_target_state(initial_state):
+    """Generates a target state from a given state
+
+    Args:
+        initial_state (dict): state
+
+    Returns:
+        [dict]: target_state
+    """
     target_state = deepcopy(initial_state)
     target_state["encoded_state"] = deepcopy(
         [
@@ -42,6 +55,15 @@ def generate_target_state(initial_state):
 
 
 def get_children_states(state, initial_state):
+    """Given a state, return all states which are 1 action away.
+
+    Args:
+        state ([dict]): Current state
+        initial_state ([dict]): initial state of the problem
+
+    Returns:
+        [list]: a list of states which can be reached with a single action.
+    """
     states = []
 
     robot_original_location = [state["encoded_state"][0], state["encoded_state"][1]]
