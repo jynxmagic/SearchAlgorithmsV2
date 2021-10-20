@@ -51,7 +51,9 @@ def tree_breadth_first_solve(initial_state, target_state):
         current_state = fifo_queue.get()
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
-            print("Tree bfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i))
+            print(
+                "Tree bfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+            )
             return [current_state, elapsed, i]
 
         for child_states in get_children_states(current_state, initial_state):
@@ -236,19 +238,16 @@ def tree_astar_solve(initial_state, target_state):
             return [current_state, elapsed, i]
 
         for child_state in get_children_states(current_state, initial_state):
-            uniform_cost = (
-                prio
-                + initial_state["graph"][
-                    child_state["encoded_state"][0], child_state["encoded_state"][1]
-                ]
-            )
+            movement_cost = initial_state["graph"][
+                child_state["encoded_state"][0], child_state["encoded_state"][1]
+            ]
 
             heuristic_cost = manhattan_distance(
                 [child_state["encoded_state"][0], child_state["encoded_state"][1]],
                 [initial_state["encoded_state"][2], initial_state["encoded_state"][3]],
             )
 
-            astar_cost = uniform_cost + heuristic_cost  # g+h
+            astar_cost = movement_cost + heuristic_cost  # g+h
 
             prio_queue.append((astar_cost, child_state))
             prio_queue = uniform_sort(prio_queue)
@@ -283,13 +282,9 @@ def graph_astar_solve(initial_state, target_state):
                 [child_state["encoded_state"][0], child_state["encoded_state"][1]],
                 closed_set,
             ):
-                uniform_cost = (
-                    prio
-                    + initial_state["graph"][
-                        child_state["encoded_state"][0],
-                        child_state["encoded_state"][1],
-                    ]
-                )
+                movement_cost = initial_state["graph"][
+                    child_state["encoded_state"][0], child_state["encoded_state"][1]
+                ]
 
                 heuristic_cost = manhattan_distance(
                     [child_state["encoded_state"][0], child_state["encoded_state"][1]],
@@ -299,7 +294,6 @@ def graph_astar_solve(initial_state, target_state):
                     ],
                 )
 
-                astar_cost = uniform_cost + heuristic_cost  # g+h
-
+                astar_cost = movement_cost + heuristic_cost  # g+h
                 prio_queue.append((astar_cost, child_state))
                 prio_queue = uniform_sort(prio_queue)
