@@ -27,14 +27,48 @@ def main():
     results = start_search_threads(initial_state, target_state)
     print("finished all threads in {}".format(time() - start_time))
 
-    draw_state(results["tbfs"][0], color="yellow", with_actions=True, title="Tree Breadth First Search")
-    draw_state(results["gbfs"][0], color="yellow", with_actions=True, title="Graph Breadth First Search")
-    draw_state(results["tdfs"][0], color="green", with_actions=True, title="Tree Depth First Search")
-    draw_state(results["gdfs"][0], color="green", with_actions=True, title="Graph Depth First Search")
-    draw_state(results["tucs"][0], color="purple", with_actions=True, title="Tree Uniform Cost Search")
-    draw_state(results["gucs"][0], color="purple", with_actions=True, title="Graph Uniform Cost Search")
-    draw_state(results["tastar"][0], color="orange", with_actions=True, title="Tree A* Search")
-    draw_state(results["gastar"][0], color="orange", with_actions=True, title="Graph A* Search")
+    draw_state(
+        results["tbfs"][0],
+        color="yellow",
+        with_actions=True,
+        title="Tree Breadth First Search",
+    )
+    draw_state(
+        results["gbfs"][0],
+        color="yellow",
+        with_actions=True,
+        title="Graph Breadth First Search",
+    )
+    draw_state(
+        results["tdfs"][0],
+        color="green",
+        with_actions=True,
+        title="Tree Depth First Search",
+    )
+    draw_state(
+        results["gdfs"][0],
+        color="green",
+        with_actions=True,
+        title="Graph Depth First Search",
+    )
+    draw_state(
+        results["tucs"][0],
+        color="purple",
+        with_actions=True,
+        title="Tree Uniform Cost Search",
+    )
+    draw_state(
+        results["gucs"][0],
+        color="purple",
+        with_actions=True,
+        title="Graph Uniform Cost Search",
+    )
+    draw_state(
+        results["tastar"][0], color="orange", with_actions=True, title="Tree A* Search"
+    )
+    draw_state(
+        results["gastar"][0], color="orange", with_actions=True, title="Graph A* Search"
+    )
 
     generate_graphs(results)
 

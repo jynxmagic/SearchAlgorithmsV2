@@ -1,8 +1,17 @@
+import os
+from copy import copy
 from queue import LifoQueue, Queue
 from time import time
 
+import psutil
 import ray
-from funcs import is_goal, is_in_closed_set, manhattan_distance, uniform_sort
+from funcs import (
+    calculate_cost,
+    is_goal,
+    is_in_closed_set,
+    manhattan_distance,
+    uniform_sort,
+)
 from states import get_children_states
 
 # remote defines the function as being multithreaded.
@@ -53,16 +62,21 @@ def tree_breadth_first_solve(initial_state, target_state):
     start_time = time()
     i = 0
 
-    fifo_queue.__sizeof__
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while not fifo_queue.empty():
         i += 1
         current_state = fifo_queue.get()
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Tree bfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Tree bfs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_states in get_children_states(current_state, initial_state):
             fifo_queue.put(child_states)
@@ -76,15 +90,21 @@ def tree_depth_first_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while not lifo_queue.empty():
         i += 1
         current_state = lifo_queue.get()
         if is_goal(current_state, target_state) or i == 100:
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Tree dfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Tree dfs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_states in get_children_states(current_state, initial_state):
             lifo_queue.put(child_states)
@@ -100,6 +120,8 @@ def graph_breadth_first_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while not fifo_queue.empty():
         i += 1
         current_state = fifo_queue.get()
@@ -108,10 +130,14 @@ def graph_breadth_first_solve(initial_state, target_state):
         )
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Graph bfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Graph bfs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(
@@ -131,6 +157,8 @@ def graph_depth_first_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while not lifo_queue.empty():
         i += 1
         current_state = lifo_queue.get()
@@ -139,10 +167,14 @@ def graph_depth_first_solve(initial_state, target_state):
         )
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Graph dfs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Graph dfs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(
@@ -168,15 +200,21 @@ def tree_uniform_cost_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while prio_queue.__sizeof__() != 0:
         i += 1
         prio, current_state = prio_queue.pop(0)
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Tree ucs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Tree ucs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
             uniform_cost = (
@@ -201,6 +239,8 @@ def graph_uniform_cost_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while prio_queue.__sizeof__() != 0:
         i += 1
         prio, current_state = prio_queue.pop(0)
@@ -210,10 +250,14 @@ def graph_uniform_cost_solve(initial_state, target_state):
 
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Graph ucs solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Graph ucs solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
 
@@ -240,16 +284,22 @@ def tree_astar_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while prio_queue.__sizeof__() != 0:
         i += 1
-        prio, current_state = prio_queue.pop(0)
+        _, current_state = prio_queue.pop(0)
 
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Tree A* solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Tree A* solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
             movement_cost = initial_state["graph"][
@@ -277,6 +327,8 @@ def graph_astar_solve(initial_state, target_state):
 
     start_time = time()
     i = 0
+    process = psutil.Process(os.getpid())
+    start_mem = copy(process.memory_info().rss)
     while prio_queue.__sizeof__() != 0:
         i += 1
         _, current_state = prio_queue.pop(0)
@@ -286,11 +338,15 @@ def graph_astar_solve(initial_state, target_state):
 
         if is_goal(current_state, target_state):
             elapsed = time() - start_time
+            end_mem = copy(process.memory_info().rss) - start_mem
+            cost = calculate_cost(current_state["path"], current_state["graph"])
             print(
-                "Graph A* solved in {}ms, {} iterations".format(int(elapsed * 1000), i)
+                "Graph A* solved in {}ms, {} iterations, with a cost of {}, using {} bytes of memory".format(
+                    int(elapsed * 1000), i, cost, end_mem
+                )
             )
 
-            return [current_state, elapsed, i]
+            return [current_state, elapsed, i, cost, end_mem]
 
         for child_state in get_children_states(current_state, initial_state):
             if not is_in_closed_set(

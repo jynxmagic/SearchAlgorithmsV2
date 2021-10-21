@@ -63,3 +63,19 @@ def manhattan_distance(l0, l1):
     diff_x = abs(l0[0] - l1[0])
     diff_y = abs(l0[1] - l1[1])
     return diff_x + diff_y
+
+
+def calculate_cost(path, graph):
+    """Calculate the cost of a given path on a weighted graph.
+
+    Args:
+        path (array): List of xy co-ordinates on the graph, example: [[0,1],[0,2],[...],[9,9]]
+        graph (array): Weighted Graph
+
+    Returns:
+        integer: cumulative cost of all nodes on a path.
+    """
+    cost = 0
+    for node in path:
+        cost += graph[node[0], node[1]]
+    return cost
