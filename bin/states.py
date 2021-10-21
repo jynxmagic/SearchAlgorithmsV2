@@ -3,30 +3,50 @@ from copy import copy, deepcopy
 import numpy as np
 
 
-def generate_init_state():
+def generate_init_state(
+    automatic_action_module=False, size=(8, 8), blocked_cell_count=10
+):
     """Generates an initial state which is a representation fo the problem.
 
+    Args:
+        automatic_action_module (boolean): whether to randomly generate an environment, or use a fixed one.
     Returns:
         [dict]: representation of the problem
     """
-    weighted_graph = [
-        [9, 1, 8, 6, 8, 9, -3, 7, 2],
-        [1, 7, 2, 6, 7, 4, 8, 7, 8],
-        [5, 8, -1, 1, 4, 1, 1, 6, 2],
-        [-3, -3, -3, -3, 9, 1, 5, 3, 2],
-        [9, 3, 7, 1, 1, 1, 1, 1, 4],
-        [1, 1, 1, 1, 4, 5, 2, 3, 7],
-        [8, -2, 2, 4, 6, 6, 3, 5, -3],
-        [7, 5, 7, 7, 1, 5, 2, 4, 4],
-        [6, 6, 7, -3, -3, 3, 9, 6, 1],
-    ]
 
-    np_weighted_graph = np.array(weighted_graph, dtype=int)
+    if automatic_action_module:
+        weighted_graph = np.random.randint(low=0, high=9, size=size, dtype=int)
+        immoveable_cells = np.random.randint(
+            low=0, high=size[1], size=(blocked_cell_count, 2)
+        )  # 10 immoveable cells
 
-    x_robot, y_robot, x_target, y_target = [2, 2, 6, 1]
+        for cell in immoveable_cells:
+            weighted_graph[cell[0], cell[1]] = -3
+        x_robot, y_robot, x_target, y_target = np.random.randint(
+            low=0, high=size[0], size=4
+        )
+        weighted_graph[x_robot, y_robot] = -1
+        weighted_graph[x_target, y_target] = -2
+
+    else:
+        x_robot, y_robot, x_target, y_target = [2, 2, 6, 1]
+        weighted_graph = np.array(
+            [
+                [9, 1, 8, 6, 8, 9, -3, 7, 2],
+                [1, 7, 2, 6, 7, 4, 8, 7, 8],
+                [5, 8, -1, 1, 4, 1, 1, 6, 2],
+                [-3, -3, -3, -3, 9, 1, 5, 3, 2],
+                [9, 3, 7, 1, 1, 1, 1, 1, 4],
+                [1, 1, 1, 1, 4, 5, 2, 3, 7],
+                [8, -2, 2, 4, 6, 6, 3, 5, -3],
+                [7, 5, 7, 7, 1, 5, 2, 4, 4],
+                [6, 6, 7, -3, -3, 3, 9, 6, 1],
+            ],
+            dtype=int,
+        )
 
     return {
-        "graph": np_weighted_graph,
+        "graph": weighted_graph,
         "encoded_state": np.array([x_robot, y_robot, x_target, y_target], dtype=int),
         "path": [[copy(x_robot), copy(y_robot)]],
     }
@@ -86,7 +106,7 @@ def get_children_states(state, initial_state):
         # bounds
         if x < 0 or y < 0:
             continue
-        if x > 9 or y > 9:
+        if x > 40 or y > 40:
             continue
         try:
             cost = initial_state["graph"][x, y]
