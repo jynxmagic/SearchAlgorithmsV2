@@ -3,24 +3,6 @@ with entirely different programs. More generic descriptions of the functions
 are given for this reason."""
 
 
-def is_goal(current_state, target_state):
-    """Determine if the current_state is the target_state
-
-    Args:
-        current_state ([dict]): dict containing values descriptive of current state
-        target_state ([dict]): dict containing values descriptive of target state
-
-    Returns:
-        [boolean]: True if current_state is target_state
-    """
-    if (
-        current_state["encoded_state"][0] == target_state["encoded_state"][2]
-        and current_state["encoded_state"][1] == target_state["encoded_state"][3]
-    ):
-        return True
-    return False
-
-
 def is_in_closed_set(location, closed_set):
     """Determine if a 1-dimensional array is within a 2-dimensional array.
 
@@ -79,3 +61,21 @@ def calculate_cost(path, graph):
     for node in path:
         cost += graph[node[0], node[1]]
     return cost
+
+
+def is_goal(current_state, target_state):
+    """Determine if the current_state is the target_state
+
+    Args:
+        current_state ([dict]): dict containing values descriptive of current state
+        target_state ([dict]): dict containing values descriptive of target state
+
+    Returns:
+        [boolean]: True if current_state is target_state
+    """
+    if (
+        current_state["encoded_state"][0] == target_state["encoded_state"][2]
+        and current_state["encoded_state"][1] == target_state["encoded_state"][3]
+    ):
+        return True
+    return False
