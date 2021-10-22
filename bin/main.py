@@ -26,7 +26,9 @@ def start_search_threads(initial_state, target_state):
     Returns:
         dict: solved problems
     """
-    tbfs_ref = tree_breadth_first_solve.remote(initial_state, target_state) #remote means multi-threaded
+    tbfs_ref = tree_breadth_first_solve.remote(
+        initial_state, target_state
+    )  # remote means multi-threaded
     tdfs_ref = tree_depth_first_solve.remote(initial_state, target_state)
     gbfs_ref = graph_breadth_first_solve.remote(initial_state, target_state)
     gdfs_ref = graph_depth_first_solve.remote(initial_state, target_state)

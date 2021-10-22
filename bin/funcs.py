@@ -1,3 +1,8 @@
+"""The idea of this module is that each of the functions can be very easily utilized
+with entirely different programs. More generic descriptions of the functions
+are given for this reason."""
+
+
 def is_goal(current_state, target_state):
     """Determine if the current_state is the target_state
 
