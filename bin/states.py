@@ -106,7 +106,7 @@ def get_children_states(state, initial_state):
         # bounds
         if x < 0 or y < 0:
             continue
-        if x > 40 or y > 40:
+        if x > 9 or y > 9:
             continue
         try:
             cost = initial_state["graph"][x, y]

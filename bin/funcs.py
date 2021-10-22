@@ -1,8 +1,3 @@
-from copy import deepcopy
-
-import numpy as np
-
-
 def is_goal(current_state, target_state):
     """Determine if the current_state is the target_state
 

@@ -45,6 +45,7 @@ def graph_depth_first_solve(initial_state, target_state):
             ):
                 lifo_queue.put(child_state)
 
+
 @ray.remote
 def tree_depth_first_solve(initial_state, target_state):
     """Use DFS to search for target state"""

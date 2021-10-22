@@ -45,6 +45,7 @@ def graph_breadth_first_solve(initial_state, target_state):
             ):
                 fifo_queue.put(child_state)
 
+
 @ray.remote
 def tree_breadth_first_solve(initial_state, target_state):
     """Use BFS to search for target state"""
