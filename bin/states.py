@@ -6,7 +6,7 @@ import numpy as np
 def generate_init_state(
     automatic_action_module=False, size=(8, 8), blocked_cell_count=10
 ):
-    """Generates an initial state which is a representation fo the problem.
+    """Generates an initial state which is a representation of the problem.
 
     Args:
         automatic_action_module (boolean): whether to randomly generate an environment, or use a fixed one.

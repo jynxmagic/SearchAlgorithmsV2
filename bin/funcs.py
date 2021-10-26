@@ -40,7 +40,7 @@ def manhattan_distance(l0, l1):
         l1 ([xy array]): location of the target on a 2d graph as [x,y]
 
     Returns:
-        [type]: [description]
+        integer: the distance between the two provided points
     """
     diff_x = abs(l0[0] - l1[0])
     diff_y = abs(l0[1] - l1[1])

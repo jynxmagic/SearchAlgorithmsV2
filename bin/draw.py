@@ -6,7 +6,7 @@ def draw_state(state, with_actions=False, color="Yellow", title="Problem"):
 
     Args:
         state ([dict]): ["graph"]: integer matrix, ["path"]: path robot has taken, ["encoded_state"]: robot_x robot_y target_x target_y
-        with_actions ([boolean]): whether to also draw the "path" - added as a 2d array to the state dict.
+        with_actions ([boolean]): whether to also draw the "path"
         color ([String]): Colour to draw the path
         title ([String]): Title of the tkinter window
     """

@@ -72,7 +72,7 @@ def memory_graph(res):
         x_pos,
         memory,
         "Search Algorithm",
-        "Memory usage (bytes)",
+        "Memory usage",
         "Total memory usage of each algorithm",
     )
     plt.show()
