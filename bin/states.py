@@ -91,17 +91,7 @@ def get_children_states(state, initial_state):
     for i in range(4):
         new_state = deepcopy(state)
 
-        x, y = robot_original_location.copy()
-
-        # movement model: N, E, S, W
-        if i == 0:
-            y -= 1
-        elif i == 1:
-            x += 1
-        elif i == 2:
-            y += 1
-        elif i == 3:
-            x -= 1
+        x, y = get_action_model(robot_original_location.copy(), i)
 
         # bounds
         if x < 0 or y < 0:
@@ -124,3 +114,33 @@ def get_children_states(state, initial_state):
             continue
 
     return states
+
+
+def get_action_model(location, action_value):
+    """A corrosponding action model on the enviornment.
+
+    Args:
+        location (list): x and y location as list
+        action_value (list): new x and y location for given action_value
+
+    Returns:
+        [type]: [description]
+    """
+    # movement model: N, E, S, W
+    [x, y] = location
+    if action_value == 0:
+        y -= 1
+    elif action_value == 1:
+        x += 1
+    elif action_value == 2:
+        y += 1
+    elif action_value == 3:
+        x -= 1
+
+    # it's possible to make the robot go north east:
+    # elif i == 4
+    # x+=1
+    # y-=1
+    # also south east. etc.
+
+    return [x, y]
