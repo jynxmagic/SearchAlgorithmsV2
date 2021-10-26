@@ -39,6 +39,7 @@ def start_search_threads(initial_state, target_state):
 
     # ray.get forces main thread to stop until results.
     # all child threads are still running simultaenously though
+    # todo: could iterate over an array to start threads.
     print("Waiting for searches to find solutions... (Loading...)")
     return {
         "tbfs": ray.get(tbfs_ref),
@@ -71,6 +72,8 @@ def main():
     results = start_search_threads(initial_state, target_state)
     print("finished all threads in {}".format(time() - start_time))
 
+    # probably should use iteration here too,
+    # though each method call is slightly different
     draw_state(
         results["tbfs"][0],
         color="yellow",
