@@ -26,7 +26,7 @@ In the case that your issue has been addressed, try installing the latest nightl
 
 If your issue has not yet been addressed, comment on the Windows Known Issues page.
 
-
+5. RUN `$python bin/main.py` FROM THE SAME FOLDER THIS FILE IS LOCATED.
 
 # Enviornment used to run tests:
 Processor: AMD Ryzen 2700X 16CPU Processor ~@3.7GHZ 
